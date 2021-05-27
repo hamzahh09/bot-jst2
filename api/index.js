@@ -27,6 +27,43 @@ bot.onText(/\/menu/, (msg) => {
         `this is your main menu`
     );   
 });
+state = 0;
+bot.onText(/\/predict/, (msg) => {
+    bot.sendMessage(
+        msg.chat.id,
+        `masukkan nilai i|v contohnya 9|9`
+    );
+    state = 1;
+});
+
+bot.on('message' ,(msg) => {
+   
+    if(state == 1){
+         console.log(msg.text);
+         s = msg.text.split("|")
+         i = [0]
+         v = [1]
+        model.predict(
+        [
+            parseFloat(s[0])/string to float
+            parseFloat(s[1])
+        ]
+    ).then((jres)=>{
+        bot.sendMessage(
+        msg.chat.id,
+        `nilai v yang diprediksi adalah ${jres[0]} volt`
+    );   
+        bot.sendMessage(
+        msg.chat.id,
+        `nilai p yang diprediksi  ${jres[1]} watt`
+    );   
+        
+    })
+    }else{
+        state == 0
+    
+    }
+})
 
 // routers
 r.get('/prediction/:i/:r', function(req, res, next) {    
