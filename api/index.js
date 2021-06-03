@@ -30,7 +30,7 @@ bot.onText(/\/predict/, (msg) => {
     state = 1;
 });
 
-bot.('message', (msg) => { 
+bot.on('message', (msg) => { 
    if(state == 1){
    s = msg.text.split("|");
    model.predict(
@@ -41,9 +41,9 @@ bot.('message', (msg) => {
    ).then((jres1)=>{
        console.log(jres1);
        
-       cls_model.classify(parseFloat(s[0]),(parseFloat(s[1]),(parseFloat(s[0]),(parseFloat(s[1])]).then((jres2)=>{
+       cls_model.classify([parseFloat(s[0]),parseFloat(s[1]),parseFloat(jres1[0]),parseFloat(jres1[1])]).then((jres2)=>{
        bot.sendMessage(
-       msg.chat.id,
+            msg.chat.id,
            `nilai v yang diprediksi adalah ${jres1[0]} volt`
        );
        bot.sendMessage(
